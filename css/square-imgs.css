@@ -1,0 +1,95 @@
+.square-1 {
+    background-image: url('../thrive imgs/social-network.webp');
+}
+
+.square-2 {
+    background-image: url('../thrive imgs/trafego-pago.jpg');
+}
+
+.square-3 {
+    background-image: url('../thrive imgs/audiovisual.webp');
+}
+
+.square-4 {
+    background-image: url('../thrive imgs/criacao-de-site.jpg');
+}
+
+.square-5 {
+    background-image: url('../thrive imgs/gestao-marketing.jpg');
+}
+
+.square-6 {
+    background-image: url('../thrive imgs/fotografia.jpeg');
+}
+
+.square-7 {
+    background-image: url('../thrive imgs/design.jpg');
+}
+
+.square-8 {
+    background-image: url('../thrive imgs/editor-video.jpg');
+}
+
+.square-9 {
+    background-image: url('../thrive imgs/landing-page.webp');
+}
+
+.square-10 {
+    background-image: url('../thrive imgs/youtube.jpg');
+}
+
+.square-11 {
+    background-image: url('../thrive imgs/podcast.webp');
+}
+
+.square-12 {
+    background-image: url('../thrive imgs/ebook.jpg');
+}
+
+.square.square-1::after {
+    content: "Gestão de Redes Sociais";
+}
+
+.square.square-2::after {
+    content: "Gestão de Tráfego Pago";
+}
+
+.square.square-3::after {
+    content: "Produção Audiovisual";
+}
+
+.square.square-4::after {
+    content: "Desenvolvimento de Site";
+}
+
+.square.square-5::after {
+    content: "Gestão de Marketing";
+}
+
+.square.square-6::after {
+    content: "Fotografia";
+}
+
+.square.square-7::after {
+    content: "Design";
+}
+
+.square.square-8::after {
+    content: "Edição de Vídeo";
+}
+
+.square.square-9::after {
+    content: "Landing Page";
+}
+
+.square.square-10::after {
+    content: "Youtube";
+}
+
+.square.square-11::after {
+    content: "Podcast";
+}
+
+.square.square-12::after {
+    content: "E-books";
+}

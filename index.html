@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <script src="js/script.js" defer></script>
+    <title>Thrive</title>
+</head>
+
+<body>
+    <div class="banner">
+        <div class="icones">
+            <a href="https://www.instagram.com/thrivemarketingc/" target="_blank">
+                <i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.link/6dq8aa" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-envelope" id="copyEmail"></i>
+                <span class="tooltip" id="tooltip">Copiado!</span>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <i id="left" class="fa-solid fa-angle-left"></i>
+        <ul class="carousel">
+            <li class="square square-1" draggable="false"></li>
+            <li class="square square-2" draggable="false"></li>
+            <li class="square square-3" draggable="false"></li>
+            <li class="square square-4" draggable="false"></li>
+            <li class="square square-5" draggable="false"></li>
+            <li class="square square-6" draggable="false"></li>
+            <li class="square square-7" draggable="false"></li>
+            <li class="square square-8" draggable="false"></li>
+            <li class="square square-9" draggable="false"></li>
+            <li class="square square-10" draggable="false"></li>
+            <li class="square square-11" draggable="false"></li>
+            <li class="square square-12" draggable="false"></li>
+        </ul>
+        <i id="right" class="fa-solid fa-angle-right"></i>
+    </div>
+
+    <!-- Janela de conteúdo -->
+    <div id="popup" class="popup">
+
+        <div class="popup-content">
+            <div id="popup-image" class="popup-image"></div>
+            <div id="popup-texto" class="popup-texto">
+            </div>
+        </div>
+</body>
+
+<script>
+    document.getElementById('copyEmail').addEventListener('click', function () {
+        const email = "thriveconnect7@gmail.com";
+        const tooltip = document.getElementById('tooltip');
+
+        // Copiar o email para a área de transferência
+        navigator.clipboard.writeText(email).then(() => {
+            // Mostrar o balão
+            tooltip.classList.add('show');
+
+            // Ocultar o balão após 2 segundos
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        }).catch(err => {
+            console.error("Erro ao copiar o email: ", err);
+        });
+    });
+</script>
+
+</html>
