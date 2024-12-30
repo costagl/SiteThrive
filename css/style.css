@@ -9,11 +9,7 @@
     margin-top: auto;
     margin-bottom: 2.5vh;
 
-<<<<<<< HEAD
-    border: solid lightgreen 1px;
-=======
     /* border: solid lightgreen 1px; */
->>>>>>> 9a96066 (Site Thrive v1.0)
 }
 
 .wrapper .carousel {
@@ -27,11 +23,7 @@
     width: 92%;
     gap: 1.5vw;
 
-<<<<<<< HEAD
-    border: solid aqua 1px;
-=======
     /* border: solid aqua 1px; */
->>>>>>> 9a96066 (Site Thrive v1.0)
 }
 
 .carousel.dragging .square {
