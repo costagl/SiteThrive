@@ -88,37 +88,8 @@ const arrowBtns = document.querySelectorAll(".wrapper i");
 const firstCardWidth = carousel.querySelector(".square").offsetWidth;
 const moveAmount = firstCardWidth * 1.198
 
-let isDragging = false, isBetweenDragAndClick = false, startX, startScrollLeft;
-
-const scrollCarousel = (direction) => {
-    const distance = direction === "left" ? -moveAmount : moveAmount;
-    const duration = 700;
-    const startTime = performance.now();
-    const startScroll = carousel.scrollLeft;
-
-    const animate = (currentTime) => {
-        const elapsedTime = currentTime - startTime;
-        const progress = Math.min(elapsedTime / duration, 1);
-        carousel.scrollLeft = startScroll + distance * easeInOutCubic(progress);
-
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        }
-    };
-
-    requestAnimationFrame(animate);
-};
-
-const easeInOutCubic = (t) => {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-};
-
-arrowBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        scrollCarousel(btn.id);
-    });
-});
-
+let isDragging = false, isBetweenDragAndClick = false, startX, startScrollLeft, velocity;
+let prevX = 0, prevTime = 0;
 
 const dragStart = (e) => {
     isDragging = true;
@@ -127,32 +98,61 @@ const dragStart = (e) => {
 
     startX = e.pageX || e.touches[0].pageX;
     startScrollLeft = carousel.scrollLeft;
+    prevX = startX;
+    prevTime = Date.now();
+    velocity = 0;
 };
 
 const dragging = (e) => {
     if (!isDragging) return;
 
     const currentX = e.pageX || e.touches[0].pageX;
+    const currentTime = Date.now();
+
+    const deltaX = currentX - prevX;
+    const deltaTime = currentTime - prevTime;
+    velocity = deltaX / deltaTime;
+
+    prevX = currentX;
+    prevTime = currentTime;
+
     carousel.scrollLeft = startScrollLeft - (currentX - startX);
     isBetweenDragAndClick = true;
 };
 
 const dragStop = () => {
+    if (!isDragging) return;
+
     isDragging = false;
     carousel.classList.remove("dragging");
+    applyInertia();
 };
 
-// Mouse
+const applyInertia = () => {
+    const friction = 0.95;
+    const minVelocity = 0.05;
+
+    const animate = () => {
+        if (Math.abs(velocity) > minVelocity) {
+            carousel.scrollLeft -= velocity * 20; // Scale velocity for smoother movement
+            velocity *= friction; // Apply friction
+            requestAnimationFrame(animate);
+        }
+    };
+
+    animate();
+};
+
+// Mouse Events
 carousel.addEventListener("mousedown", dragStart);
 carousel.addEventListener("mousemove", dragging);
 carousel.addEventListener("mouseup", dragStop);
 carousel.addEventListener("mouseleave", dragStop);
 
-// Touch Screen
+// Touch Events
 carousel.addEventListener("touchstart", dragStart);
 carousel.addEventListener("touchmove", dragging);
 carousel.addEventListener("touchend", dragStop);
-
 
 const squares = document.querySelectorAll(".carousel .square");
 squares.forEach((square, index) => {
@@ -164,3 +164,4 @@ squares.forEach((square, index) => {
         openWindow(index + 1);
     });
 });
+

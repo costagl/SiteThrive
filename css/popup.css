@@ -164,3 +164,68 @@
 .close:hover {
     color: #585858;
 }
+
+@media screen and (max-width: 768px) {
+    .popup-content {
+        flex-direction: column;
+        width: 85%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .popup-image {
+        display: none;
+    }
+
+    .popup-texto {
+        width: 100%;
+        padding: 2vh 0;
+        text-align: center;
+    }
+
+    .popup-texto .descricao {
+        color: rgb(64, 65, 80);
+
+        font-size: 16px;
+        line-height: 3vh;
+    }
+
+    .popup-texto .botoes {
+        display: flex;
+        margin-top: auto;
+        justify-content: center;
+        position: relative;
+    }
+
+    .popup-texto a,
+    .popup-texto a:last-child {
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .popup-texto .titulo {
+        color: rgb(24, 24, 24);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        font-weight: 600;
+
+        font-size: 30px;
+    }
+
+    .popup-texto .titulo-divisor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .popup-texto .titulo::after {
+        content: "";
+        margin-top: 10px;
+        height: 10px;
+        width: 100%;
+        background: rgb(148, 236, 113);
+        border-radius: 2px;
+    }
+}
