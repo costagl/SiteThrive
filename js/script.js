@@ -89,18 +89,19 @@ const firstCardWidth = carousel.querySelector(".square").offsetWidth;
 const moveAmount = firstCardWidth * 1.198
 
 let isDragging = false, isBetweenDragAndClick = false, startX, startScrollLeft, velocity;
-let prevX = 0, prevTime = 0;
+let prevX = 0, prevTime = 0, isInertiaActive = false;
 
 const dragStart = (e) => {
     isDragging = true;
     isBetweenDragAndClick = false;
+    isInertiaActive = false; // Reset inertia flag
     carousel.classList.add("dragging");
 
     startX = e.pageX || e.touches[0].pageX;
     startScrollLeft = carousel.scrollLeft;
     prevX = startX;
     prevTime = Date.now();
-    velocity = 0;
+    velocity = 0; // Reset velocity
 };
 
 const dragging = (e) => {
@@ -109,6 +110,7 @@ const dragging = (e) => {
     const currentX = e.pageX || e.touches[0].pageX;
     const currentTime = Date.now();
 
+    // Calculate velocity
     const deltaX = currentX - prevX;
     const deltaTime = currentTime - prevTime;
     velocity = deltaX / deltaTime;
@@ -125,18 +127,23 @@ const dragStop = () => {
 
     isDragging = false;
     carousel.classList.remove("dragging");
+
+    // Apply inertia
     applyInertia();
 };
 
 const applyInertia = () => {
-    const friction = 0.95;
-    const minVelocity = 0.05;
+    isInertiaActive = true; // Mark inertia as active
+    const friction = 0.95; // Friction to slow down the movement
+    const minVelocity = 0.1; // Threshold to stop the movement
 
     const animate = () => {
         if (Math.abs(velocity) > minVelocity) {
             carousel.scrollLeft -= velocity * 20; // Scale velocity for smoother movement
             velocity *= friction; // Apply friction
             requestAnimationFrame(animate);
+        } else {
+            isInertiaActive = false; // Inertia complete
         }
     };
 
@@ -154,6 +161,39 @@ carousel.addEventListener("touchstart", dragStart);
 carousel.addEventListener("touchmove", dragging);
 carousel.addEventListener("touchend", dragStop);
 
+// Arrow Buttons
+const scrollCarousel = (direction) => {
+    if (isInertiaActive) return; // Prevent button click during inertia
+
+    const distance = direction === "left" ? -moveAmount : moveAmount;
+    const duration = 350;
+    const startTime = performance.now();
+    const startScroll = carousel.scrollLeft;
+
+    const animate = (currentTime) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        carousel.scrollLeft = startScroll + distance * easeInOutCubic(progress);
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+    };
+
+    requestAnimationFrame(animate);
+};
+
+const easeInOutCubic = (t) => {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+};
+
+arrowBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        scrollCarousel(btn.id);
+    });
+});
+
+// Squares Click
 const squares = document.querySelectorAll(".carousel .square");
 squares.forEach((square, index) => {
     square.addEventListener("click", (e) => {
@@ -164,4 +204,5 @@ squares.forEach((square, index) => {
         openWindow(index + 1);
     });
 });
+
 
