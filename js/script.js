@@ -64,14 +64,14 @@ function openWindow(index) {
         "https://wa.link/6dq8aa"
     ];
 
-    popupImage.style.backgroundImage = `url('../thrive imgs/${imagem[index - 1]}')`;
+    popupImage.style.backgroundImage = `url('../src/img/square/${imagem[index - 1]}')`;
     popupTexto.innerHTML = `<div class="titulo-divisor"><p class="titulo">${titulo[index - 1]}</p><div class="divisor"></div></div><p class="descricao">${descricao[index - 1]}</p><div class="botoes"><a href="${link[index - 1]}" target="_blank"><i class="fa-brands fa-whatsapp"></i>Whatsapp</a><a href="https://www.instagram.com/thrivemarketingc/" target="_blank"><i class="fa-brands fa-instagram"></i>Instagram</a></div>`;
-    popup.style.display = 'flex'; // Exibe o popup
+    popup.style.display = 'flex';
 }
 
 function closeWindow() {
     const popup = document.getElementById('popup');
-    popup.style.display = 'none'; // Oculta o popup
+    popup.style.display = 'none';
 }
 
 document.getElementById('popup').addEventListener('click', (event) => {
@@ -86,26 +86,54 @@ document.getElementById('popup').addEventListener('click', (event) => {
 const carousel = document.querySelector(".carousel");
 const arrowBtns = document.querySelectorAll(".wrapper i");
 const firstCardWidth = carousel.querySelector(".square").offsetWidth;
+const moveAmount = firstCardWidth * 1.198
 
 let isDragging = false, isBetweenDragAndClick = false, startX, startScrollLeft;
 
+const scrollCarousel = (direction) => {
+    const distance = direction === "left" ? -moveAmount : moveAmount;
+    const duration = 700;
+    const startTime = performance.now();
+    const startScroll = carousel.scrollLeft;
+
+    const animate = (currentTime) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        carousel.scrollLeft = startScroll + distance * easeInOutCubic(progress);
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+    };
+
+    requestAnimationFrame(animate);
+};
+
+const easeInOutCubic = (t) => {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+};
+
 arrowBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-        carousel.scrollLeft += btn.id === "left" ? -firstCardWidth : firstCardWidth;
-    })
-})
+        scrollCarousel(btn.id);
+    });
+});
+
 
 const dragStart = (e) => {
     isDragging = true;
     isBetweenDragAndClick = false;
     carousel.classList.add("dragging");
-    startX = e.pageX;
+
+    startX = e.pageX || e.touches[0].pageX;
     startScrollLeft = carousel.scrollLeft;
 };
 
 const dragging = (e) => {
     if (!isDragging) return;
-    carousel.scrollLeft = startScrollLeft - (e.pageX - startX);
+
+    const currentX = e.pageX || e.touches[0].pageX;
+    carousel.scrollLeft = startScrollLeft - (currentX - startX);
     isBetweenDragAndClick = true;
 };
 
@@ -114,10 +142,17 @@ const dragStop = () => {
     carousel.classList.remove("dragging");
 };
 
-carousel.addEventListener("mousemove", dragging);
+// Mouse
 carousel.addEventListener("mousedown", dragStart);
+carousel.addEventListener("mousemove", dragging);
 carousel.addEventListener("mouseup", dragStop);
 carousel.addEventListener("mouseleave", dragStop);
+
+// Touch Screen
+carousel.addEventListener("touchstart", dragStart);
+carousel.addEventListener("touchmove", dragging);
+carousel.addEventListener("touchend", dragStop);
+
 
 const squares = document.querySelectorAll(".carousel .square");
 squares.forEach((square, index) => {

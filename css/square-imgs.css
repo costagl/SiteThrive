@@ -1,49 +1,49 @@
 .square-1 {
-    background-image: url('../thrive imgs/social-network.webp');
+    background-image: url('../src/img/square/social-network.webp');
 }
 
 .square-2 {
-    background-image: url('../thrive imgs/trafego-pago.jpg');
+    background-image: url('../src/img/square/trafego-pago.jpg');
 }
 
 .square-3 {
-    background-image: url('../thrive imgs/audiovisual.webp');
+    background-image: url('../src/img/square/audiovisual.webp');
 }
 
 .square-4 {
-    background-image: url('../thrive imgs/criacao-de-site.jpg');
+    background-image: url('../src/img/square/criacao-de-site.jpg');
 }
 
 .square-5 {
-    background-image: url('../thrive imgs/gestao-marketing.jpg');
+    background-image: url('../src/img/square/gestao-marketing.jpg');
 }
 
 .square-6 {
-    background-image: url('../thrive imgs/fotografia.jpeg');
+    background-image: url('../src/img/square/fotografia.jpeg');
 }
 
 .square-7 {
-    background-image: url('../thrive imgs/design.jpg');
+    background-image: url('../src/img/square/design.jpg');
 }
 
 .square-8 {
-    background-image: url('../thrive imgs/editor-video.jpg');
+    background-image: url('../src/img/square/editor-video.jpg');
 }
 
 .square-9 {
-    background-image: url('../thrive imgs/landing-page.webp');
+    background-image: url('../src/img/square/landing-page.webp');
 }
 
 .square-10 {
-    background-image: url('../thrive imgs/youtube.jpg');
+    background-image: url('../src/img/square/youtube.jpg');
 }
 
 .square-11 {
-    background-image: url('../thrive imgs/podcast.webp');
+    background-image: url('../src/img/square/podcast.webp');
 }
 
 .square-12 {
-    background-image: url('../thrive imgs/ebook.jpg');
+    background-image: url('../src/img/square/ebook.jpg');
 }
 
 .square.square-1::after {
