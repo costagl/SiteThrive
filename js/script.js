@@ -94,14 +94,14 @@ let prevX = 0, prevTime = 0, isInertiaActive = false;
 const dragStart = (e) => {
     isDragging = true;
     isBetweenDragAndClick = false;
-    isInertiaActive = false; // Reset inertia flag
+    isInertiaActive = false;
     carousel.classList.add("dragging");
 
     startX = e.pageX || e.touches[0].pageX;
     startScrollLeft = carousel.scrollLeft;
     prevX = startX;
     prevTime = Date.now();
-    velocity = 0; // Reset velocity
+    velocity = 0;
 };
 
 const dragging = (e) => {
@@ -110,7 +110,6 @@ const dragging = (e) => {
     const currentX = e.pageX || e.touches[0].pageX;
     const currentTime = Date.now();
 
-    // Calculate velocity
     const deltaX = currentX - prevX;
     const deltaTime = currentTime - prevTime;
     velocity = deltaX / deltaTime;
@@ -128,42 +127,38 @@ const dragStop = () => {
     isDragging = false;
     carousel.classList.remove("dragging");
 
-    // Apply inertia
     applyInertia();
 };
 
 const applyInertia = () => {
-    isInertiaActive = true; // Mark inertia as active
-    const friction = 0.95; // Friction to slow down the movement
-    const minVelocity = 0.1; // Threshold to stop the movement
+    isInertiaActive = true;
+    const friction = 0.95;
+    const minVelocity = 0.05;
 
     const animate = () => {
         if (Math.abs(velocity) > minVelocity) {
-            carousel.scrollLeft -= velocity * 20; // Scale velocity for smoother movement
-            velocity *= friction; // Apply friction
+            carousel.scrollLeft -= velocity * 10;
+            velocity *= friction;
             requestAnimationFrame(animate);
         } else {
-            isInertiaActive = false; // Inertia complete
+            isInertiaActive = false;
         }
     };
 
     animate();
 };
 
-// Mouse Events
 carousel.addEventListener("mousedown", dragStart);
 carousel.addEventListener("mousemove", dragging);
 carousel.addEventListener("mouseup", dragStop);
 carousel.addEventListener("mouseleave", dragStop);
 
-// Touch Events
 carousel.addEventListener("touchstart", dragStart);
 carousel.addEventListener("touchmove", dragging);
 carousel.addEventListener("touchend", dragStop);
 
-// Arrow Buttons
 const scrollCarousel = (direction) => {
-    if (isInertiaActive) return; // Prevent button click during inertia
+    if (isInertiaActive) return;
 
     const distance = direction === "left" ? -moveAmount : moveAmount;
     const duration = 350;
@@ -193,7 +188,6 @@ arrowBtns.forEach(btn => {
     });
 });
 
-// Squares Click
 const squares = document.querySelectorAll(".carousel .square");
 squares.forEach((square, index) => {
     square.addEventListener("click", (e) => {
